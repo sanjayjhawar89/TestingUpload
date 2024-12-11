@@ -1,12 +1,13 @@
-provider "aws" {
-  region = "us-east-1"  # Change this to your desired region
-}
+module "s3_bucket" {
+  source = "terraform-aws-modules/s3-bucket/aws"
 
-resource "aws_instance" "vm2" {
-  ami           = "ami-0c55b159cbfafe1f0"  # Replace with a valid AMI ID for your region
-  instance_type = "t2.micro"               # Change instance type as needed
+  bucket = "my-s3-bucket"
+  acl    = "private"
 
-  tags = {
-    Name = "ExampleInstance"
+  control_object_ownership = true
+  object_ownership         = "ObjectWriter"
+
+  versioning = {
+    enabled = true
   }
 }
